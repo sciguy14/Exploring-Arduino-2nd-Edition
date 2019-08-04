@@ -35,9 +35,15 @@ void loop()
  
   //Read the temperature from the device
   //Request 1 Byte from the specified address
-  Wire.requestFrom(temp_address, 1); 
-  //wait for response 
-  while(Wire.available() == 0);
+  int returned_bytes = Wire.requestFrom(temp_address, 1);
+  
+  //If no data was returned, then something is wrong.
+  if (returned_bytes == 0)
+  {
+    Serial.println("I2C Error"); //Print an error
+    while(1);                    //Halt the program
+  }
+  
   // Get the temp and read it into a variable
   int c = Wire.read(); 
  
@@ -52,4 +58,3 @@ void loop()
  
   delay(500);
 }
-

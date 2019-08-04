@@ -119,8 +119,18 @@ void loop()
   Wire.beginTransmission(TEMP_ADDR); //Start talking
   Wire.write(0);                     //Ask for register zero
   Wire.endTransmission();            //Complete transmission
-  Wire.requestFrom(TEMP_ADDR, 1);    //Request 1 byte
-  while(Wire.available() == 0);      //Wait for response
+  
+  //Request 1 byte
+  int returned_bytes = Wire.requestFrom(TEMP_ADDR, 1);    
+  
+  //If no data was returned, then something is wrong.
+  if (returned_bytes == 0)
+  {
+    lcd.clear();            //Clear the display
+    lcd.print("I2C Error"); //Show an error
+    while(1);               //Halt the program
+  }
+  
   int c = Wire.read();               //Get the temp in C
   lcd.setCursor(8,0);                //Move the cursor
   lcd.print(c);                      //Print this new value
