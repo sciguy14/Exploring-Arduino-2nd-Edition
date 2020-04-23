@@ -100,9 +100,9 @@ void setMode(int mode)
   //OFF (mode = 0)
   else
   {
-    digitalWrite(RLED, LOW);
-    digitalWrite(GLED, LOW);
-    digitalWrite(BLED, LOW);
+    digitalWrite(RLED, HIGH);
+    digitalWrite(GLED, HIGH);
+    digitalWrite(BLED, HIGH);
   }
 }
 
